@@ -1,48 +1,56 @@
 def uitvoeren(regel):
-    commando = regel[0]                 # de eerste letter van de regel
-    argument = regel[1:].strip('\n')    # de rest van de regel, en verwijder de Enter
-
+    commando = regel[0]  
+    argument = regel[1:].strip('\n') 
+    
     match commando:
-        case 'f':  # vooruit
+        case 'f':  
             t.forward(float(argument))
-        case 'b':  # achteruit
+        case 'b': 
             t.backward(float(argument))
-        case 'l':  # naar links draaien
+        case 'l':  
             t.left(float(argument))
-        case 'r':  # naar rechts draaien
+        case 'r':  
             t.right(float(argument))
-        case 'o':  # stip maken
-            t.dot(float(argument))
-        case 's':  # begin met vullen
+        case 'o':  
+            (radius, color) = argument.split(',')
+            t.dot(float(radius), color)
+        case 's':  
             t.begin_fill()
-        case 'e':  # stop met vullen
+        case 'e':  
             t.end_fill()
-        case 'p':  # penkleur instellen
+        case 'p': 
             t.pencolor(argument)
-        case 'i':  # vulkleur instellen
+        case 'i':  
             t.fillcolor(argument)
-        case 'c':  # cirkel tekenen
-            (rad, deg) = argument.split(',')  # split argumenten op ','
+        case 'c':  
+            (rad, deg) = argument.split(',')
             t.circle(float(rad), float(deg))
-        case 'u':  # pen optillen
+        case 'u':  
             t.up()
-        case 'd':  # pen neerzetten
+        case 'd':  
             t.down()
-        case 'g':  # ga naar een specifieke positie
-            (x, y) = argument.split(',')  # split argumenten op ','
+        case 'g':  
+            (x, y) = argument.split(',')
             t.goto(float(x), float(y))
-        case _:  # onherkenbaar commando
+        case _:
             print(f"Onbekend commando: {commando}")
-
 import turtle
 
-# Open het bestand en voer de commando's uit
-file = open("tekening.txt", "r")
+turtle.speed(100)
+
+
+
 s = turtle.getscreen()
 t = turtle.Turtle()
+
+
+file = open("tekening.txt", "r")
+
 
 while regel := file.readline():
     uitvoeren(regel)
 
-file.close()
+
+
 turtle.mainloop()
+
